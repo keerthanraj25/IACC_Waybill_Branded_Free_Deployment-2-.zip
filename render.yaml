@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: iacc-waybill
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: waitress-serve --listen=0.0.0.0:$PORT app:app
+    healthCheckPath: /login
+    envVars:
+      - key: IACC_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: IACC_ADMIN_PASSWORD
+        sync: false
+      - key: IACC_SECURE_COOKIES
+        value: "true"
